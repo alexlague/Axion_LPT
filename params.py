@@ -19,6 +19,10 @@ ax_frac  = 0.1  # between 0 and 1
 kmin     = 1e-2 # in Mpc^{-1}
 kmax     = 1e2  # in Mpc^{-1}
 
+# Optimal growth paramters
+
+find_optimal = False # use the find_optimal_parameters routine (based on fsolve, can be slow)
+
 # Redshift of interest
 
 redshift = 1.
