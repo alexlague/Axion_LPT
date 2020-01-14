@@ -24,12 +24,12 @@ fft_disp_z = np.fft.fftn(disp_cdm_z)
 
 # Small-scale filtering
 L  = 256. # Mpc
-dx = L/N
+ds = L/N / np.pi # to adjust for Nyquist frequency
 
 freq_x, freq_y, freq_z = np.meshgrid(np.fft.fftfreq(N),np.fft.fftfreq(N),np.fft.fftfreq(N))
-freq_x = freq_x / dx # need to divide to get physical wavenumbers 
-freq_y = freq_y / dx
-freq_z = freq_z / dx
+freq_x = freq_x / ds # need to divide to get physical wavenumbers 
+freq_y = freq_y / ds
+freq_z = freq_z / ds
 
 if find_optimal:
     best_params = find_optimal_parameters(redshift, ax_mass, ax_frac)
@@ -41,12 +41,24 @@ else:
 
 print(best_params[0],best_params[1])
 
-fft_disp_x *= smoothed_axion_growth(abs(freq_x), *best_params)
-fft_disp_y *= smoothed_axion_growth(abs(freq_y), *best_params)
-fft_disp_z *= smoothed_axion_growth(abs(freq_z), *best_params)
-print(abs(freq_x[::50]))
-print(fft_disp_x[::50])
-'''
+norm_freq    = np.sqrt(abs(freq_x)**2 + abs(freq_y)**2 + abs(freq_z)**2)
+scaling_freq = smoothed_axion_growth(norm_freq, *best_params)
+
+fft_disp_x *= scaling_freq
+fft_disp_y *= scaling_freq
+fft_disp_z *= scaling_freq
+
+#fft_disp_x *= smoothed_axion_growth(abs(freq_x), *best_params)
+#fft_disp_y *= smoothed_axion_growth(abs(freq_y), *best_params)
+#fft_disp_z *= smoothed_axion_growth(abs(freq_z), *best_params)
+#print(abs(freq_x[::50]))
+#print(fft_disp_x[::50])
+
+#import matplotlib.pyplot as plt
+#plt.semilogx(norm_freq.ravel()[::15000],smoothed_axion_growth(norm_freq, *best_params).ravel()[::15000],'.')
+#plt.show()
+
+
 # iFFT
 new_disp_x = np.fft.ifftn(fft_disp_x)
 new_disp_y = np.fft.ifftn(fft_disp_y)
@@ -60,4 +72,3 @@ np.savez(path + 'displacements_fields/fields/etay1_' + output_f + redshift_strin
 np.savez(path + 'displacements_fields/fields/etaz1_' + output_f + redshift_string, new_disp_z)
 
 
-'''
