@@ -21,7 +21,7 @@ kmax     = 1e2  # in Mpc^{-1}
 
 # Optimal growth paramters
 
-find_optimal = False # use the find_optimal_parameters routine (based on fsolve, can be slow)
+find_optimal = True # use the find_optimal_parameters routine (based on fsolve, can be slow)
 
 # Redshift of interest
 

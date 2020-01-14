@@ -82,8 +82,8 @@ for redshift in ['_z1']:#,'_z1','_z2','_z4','_z80']:
     #np.save('particles/mixed_cdm_particles' + redshift, part_cdm_fdm)
     #np.save('particles/pure_fdm_particles' + redshift, part_fdm_fdm)
     
-    np.save('displacements_fields/particles/new_mixed_cdm_particles' + redshift, part_cdm_fdm)
-    np.save('displacements_fields/particles/new_mixed_fdm_particles' + redshift, part_fdm_fdm)
+    np.save('/project/r/rbond/alague/axion_runs/modified_LPT/displacements_fields/particles/new_mixed_cdm_particles' + redshift, part_cdm_fdm)
+    np.save('/project/r/rbond/alague/axion_runs/modified_LPT/displacements_fields/particles/new_mixed_fdm_particles' + redshift, part_fdm_fdm)
     
 
     '''

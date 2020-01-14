@@ -6,14 +6,15 @@ from nbodykit.lab import FFTPower
 from nbodykit.source import catalog
 
 h   = 0.68
-box = 256. * h
+box = 256. #* h
+path = '/project/r/rbond/alague/axion_runs/modified_LPT/displacements_fields/'
 
 for redshift in ['_z1']:#,'_z1','_z2','_z4','_z80']:
     # Load particles
 
     #pure_cdm_particles  = np.load('particles/pure_cdm_particles' + redshift + '.npy')  # 100% CDM with CDM IC
-    mixed_fdm_particles = np.load('particles/new_mixed_fdm_particles' + redshift + '.npy') # mixed case 10% FDM and 90% CDM with FDM IC
-    mixed_cdm_particles = np.load('particles/new_mixed_cdm_particles' + redshift + '.npy') # CDM displacements but with FDM IC / equivalent to WDM app
+    mixed_fdm_particles = np.load(path + 'particles/new_mixed_fdm_particles' + redshift + '.npy') # mixed case 10% FDM and 90% CDM with FDM IC
+    mixed_cdm_particles = np.load(path + 'particles/new_mixed_cdm_particles' + redshift + '.npy') # CDM displacements but with FDM IC / equivalent to WDM app
     
     # Initialize dictionaries
     
@@ -65,7 +66,7 @@ for redshift in ['_z1']:#,'_z1','_z2','_z4','_z80']:
     mixed_pk = mixed_pk.power['power'].real
     
     #np.save('power_spectra/cdm_pk' + redshift, np.array([k, cdm_pk]))
-    np.save('power_spectra/new_fdm_pk' + redshift, np.array([k, fdm_pk]))
-    np.save('power_spectra/new_cdm_pk' + redshift, np.array([k, mixed_pk]))
+    np.save(path + 'power_spectra/new_fdm_pk' + redshift, np.array([k, fdm_pk]))
+    np.save(path + 'power_spectra/new_cdm_pk' + redshift, np.array([k, mixed_pk]))
     
     print('Redshift ' + redshift + ' complete')

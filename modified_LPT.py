@@ -2,17 +2,19 @@ import numpy as np
 from params import ax_mass, ax_frac, redshift, find_optimal, input_f, output_f
 from axion_growth import find_optimal_parameters, smoothed_axion_growth
 
+# Working directory
+path = '/project/r/rbond/alague/axion_runs/modified_LPT/'
 
 # Number of particles
-N = len(np.fromfile('displacements_fields/fields/etax1_' + input_f, dtype=np.float32))**(1./3)
+N = len(np.fromfile(path + 'displacements_fields/fields/etax1_' + input_f, dtype=np.float32))**(1./3)
 N = int(round(N))
 
 # Import displacement fields
-disp_cdm_x = np.fromfile('displacements_fields/fields/etax1_' + input_f, dtype=np.float32,count=N**3)
+disp_cdm_x = np.fromfile(path + 'displacements_fields/fields/etax1_' + input_f, dtype=np.float32,count=N**3)
 disp_cdm_x = np.reshape(disp_cdm_x,(N,N,N))
-disp_cdm_y = np.fromfile('displacements_fields/fields/etay1_' + input_f, dtype=np.float32,count=N**3)
+disp_cdm_y = np.fromfile(path + 'displacements_fields/fields/etay1_' + input_f, dtype=np.float32,count=N**3)
 disp_cdm_y = np.reshape(disp_cdm_y,(N,N,N))
-disp_cdm_z = np.fromfile('displacements_fields/fields/etaz1_' + input_f, dtype=np.float32,count=N**3)
+disp_cdm_z = np.fromfile(path + 'displacements_fields/fields/etaz1_' + input_f, dtype=np.float32,count=N**3)
 disp_cdm_z = np.reshape(disp_cdm_z,(N,N,N))
 
 # FFT
@@ -42,7 +44,9 @@ print(best_params[0],best_params[1])
 fft_disp_x *= smoothed_axion_growth(abs(freq_x), *best_params)
 fft_disp_y *= smoothed_axion_growth(abs(freq_y), *best_params)
 fft_disp_z *= smoothed_axion_growth(abs(freq_z), *best_params)
-
+print(abs(freq_x[::50]))
+print(fft_disp_x[::50])
+'''
 # iFFT
 new_disp_x = np.fft.ifftn(fft_disp_x)
 new_disp_y = np.fft.ifftn(fft_disp_y)
@@ -51,8 +55,9 @@ new_disp_z = np.fft.ifftn(fft_disp_z)
 # Save FDM displacements
 redshift_string = '_z' + str(redshift)
 
-np.savez('displacements_fields/fields/etax1_' + output_f + redshift_string, new_disp_x)
-np.savez('displacements_fields/fields/etay1_' + output_f + redshift_string, new_disp_y)
-np.savez('displacements_fields/fields/etaz1_' + output_f + redshift_string, new_disp_z)
+np.savez(path + 'displacements_fields/fields/etax1_' + output_f + redshift_string, new_disp_x)
+np.savez(path + 'displacements_fields/fields/etay1_' + output_f + redshift_string, new_disp_y)
+np.savez(path + 'displacements_fields/fields/etaz1_' + output_f + redshift_string, new_disp_z)
 
 
+'''
