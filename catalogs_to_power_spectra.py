@@ -9,7 +9,7 @@ h   = 0.68
 box = 256. #* h
 path = '/project/r/rbond/alague/axion_runs/modified_LPT/displacements_fields/'
 
-for redshift in ['_z1']:#,'_z1','_z2','_z4','_z80']:
+for redshift in ['_z4']:#,'_z1','_z2','_z4','_z80']:
     # Load particles
 
     #pure_cdm_particles  = np.load('particles/pure_cdm_particles' + redshift + '.npy')  # 100% CDM with CDM IC
