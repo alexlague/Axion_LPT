@@ -35,7 +35,7 @@ def D_axion(redshift, k, a_initial, mass, frac):
 
 # Smoothed Heaviside model
 
-smoothed_axion_growth = lambda x, x0, alpha: 1 - 1./(1 + np.exp(-2*alpha*(x-x0)))
+smoothed_axion_growth = lambda x, x0, alpha: 1 - 1./(1 + np.exp(-2*alpha*(x-x0)))**8
 
 # Initial condition choice
 
