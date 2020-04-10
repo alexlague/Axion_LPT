@@ -16,14 +16,27 @@ H_of_a = lambda a: H0*np.sqrt(Omega_M0*a**(-3) + Omega_L) # expansion rate
 
 # Jeans scale
 
-kJeans = lambda a, mass, frac: 66.5 * a**(1./4) * mass**(1./2) * frac**(-1./4)
+kJeans = lambda a, mass, frac: 66.5 * a**(1./4) * mass**(1./2)
+
+# Smoothed Heaviside model
+
+def smoothed_axion_growth(k, a, mass, frac): 
+    alpha      = 0.0194 * mass**-0.501 * frac**0.0829
+    k0_over_kJ = 0.0327 * mass**-0.00485 * frac**0.527
+    k0         = k0_over_kJ * kJeans(a, mass, frac)
+    
+    print('alpha = %f Mpc' % alpha)
+    print('k0 = %f Mpc^-1' % k0)
+    return 1 - 1./(1 + np.exp(-2*alpha*(k-k0)))**8
+
+### DEPRECATED, FOUND BETTER FIT ###
 
 # Axion growth factor
-
+'''
 def D_axion(redshift, k, a_initial, mass, frac):
-    '''
-    Analytic solution for axion growth factor in matter dominated era
-    '''
+'''
+#Analytic solution for axion growth factor in matter dominated era
+'''
     
     a_today       = a_of_z(redshift)
     bk            = 2 * hbar_over_H0 * k**2 / mass # dimensionless
@@ -33,16 +46,12 @@ def D_axion(redshift, k, a_initial, mass, frac):
     
     return growth
 
-# Smoothed Heaviside model
-
-smoothed_axion_growth = lambda x, x0, alpha: 1 - 1./(1 + np.exp(-2*alpha*(x-x0)))**8
-
 # Initial condition choice
 
 def find_a_initial(redshift, mass, frac):
-    '''
-    Find a_initial for the Jeans scale to correspond to the first oscillation
-    '''
+'''
+#Find a_initial for the Jeans scale to correspond to the first oscillation
+'''
     
     a_today    = a_of_z(redshift)
     #first_zero = 3.95952791650110
@@ -56,9 +65,9 @@ def find_a_initial(redshift, mass, frac):
 # Optimal k0, alpha
 
 def find_optimal_parameters(redshift, mass, frac):
-    '''
-    Find optimal values of alpha and k0 to fit averaged linear growth
-    '''
+'''
+#Find optimal values of alpha and k0 to fit averaged linear growth
+'''
     
     a_today          = a_of_z(redshift)
     k_range          = np.logspace(np.log10(kmin),np.log10(kmax),500)
@@ -70,3 +79,4 @@ def find_optimal_parameters(redshift, mass, frac):
                                  data_to_fit[selected_indexes], maxfev=5000000)[0]
     
     return params
+'''

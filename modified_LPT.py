@@ -1,6 +1,6 @@
 import numpy as np
-from params import ax_mass, ax_frac, redshift, find_optimal, input_f, output_f, n_lpt
-from axion_growth import find_optimal_parameters, smoothed_axion_growth
+from params import ax_mass, ax_frac, redshift, input_f, output_f, n_lpt
+from axion_growth import smoothed_axion_growth
 
 # Working directory
 path = '/project/r/rbond/alague/axion_runs/modified_LPT/'
@@ -37,21 +37,8 @@ for i in range(n_lpt):
     freq_y = freq_y / ds
     freq_z = freq_z / ds
     
-    if find_optimal:
-        best_params = find_optimal_parameters(redshift, ax_mass, ax_frac)
-    else:
-        # use scaling relations (much faster)
-        #k0          = 44.3 * 1./(1+redshift)**(.25) * ax_mass**.5 *ax_frac**(-.25)
-        #alpha       = 0.0679 * 1./(1+redshift)**(-.25) * ax_mass**(-.5) * ax_frac**.25
-        k0          = 0.0853 * (66.5 * 1./(1+redshift)**(.25) * ax_mass**.5 *ax_frac**(-.25))
-        pF          = 0.0517*ax_frac**4 - 0.0973*ax_frac**3 + 0.0612*ax_frac**2 - 0.0129*ax_frac + 0.0127
-        alpha       = ax_mass**-.5 * pF
-        best_params = [k0, alpha]
-    
-    print(best_params[0],best_params[1])
-    
     norm_freq    = np.sqrt(abs(freq_x)**2 + abs(freq_y)**2 + abs(freq_z)**2)
-    scaling_freq = smoothed_axion_growth(norm_freq, *best_params)
+    scaling_freq = smoothed_axion_growth(norm_freq, 1./(1+redshift), ax_mass, ax_frac)
     
     fft_disp_x *= scaling_freq
     fft_disp_y *= scaling_freq

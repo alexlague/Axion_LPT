@@ -19,21 +19,17 @@ ax_frac  = 0.1  # between 0 and 1
 kmin     = 1e-2 # in Mpc^{-1}
 kmax     = 1e2  # in Mpc^{-1}
 
-# Optimal growth paramters
-
-find_optimal = True # use the find_optimal_parameters routine (based on fsolve, can be slow)
-
 # Redshift of interest
 
 redshift = 1.
 
 # Input file
 
-input_f  = '256Mpc_n512_nb74_nt2_1_27_10' #'256Mpc_n512_nb40_nt1_1_28_10'
+input_f  = '256Mpc_n512_nb74_nt2_1_27_10' #'256Mpc_n512_nb40_nt1_1_28_10' #'256Mpc_n512_nb74_nt2_1_27_10'
 
 # Output file name
 
-output_f = '256Mpc_n512_nb74_nt2_1_27_10_fdm_smoothed' #'256Mpc_n512_nb40_nt1_1_26_10_fdm_smoothed'
+output_f = '256Mpc_n512_nb74_nt2_1_27_10_fdm_smoothed' #'256Mpc_n512_nb40_nt1_1_27_10_fdm_smoothed' #'256Mpc_n512_nb74_nt2_1_27_10_fdm_smoothed'
 
 # LPT Order
 
